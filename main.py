@@ -1,4 +1,3 @@
-from pantry import Pantry
 from food import Food
 from meal import Meal
 
