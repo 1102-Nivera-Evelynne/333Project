@@ -20,23 +20,65 @@ class Main:
 
         if choice == "1":
             self.createUser()
+        if choice == "2":
+            self.login()
 
     def createUser(self):
         name = input("Enter your name: ")
         user = User()
+        name = str(name)
 
-        for name in self.users:
-            if name == user.getName():
-                print(f"User with name {name} already exists.")
-                return False
+        for users in self.users:
+            if name == users.getName():
+                print(f"User with name {name} already exists. Please choose a different name.")
+                self.createUser()
 
         if user.setName(name):
             self.users.append(user)
-            print(f"'{name}' has been added.")
-            return True
+            print(f"'{name}' has been added. You can now log in with this name.")
+            self.begin()
         else:
             print(f"Failed to create user with name {name}. Name cannot be empty.")
             self.createUser()
+
+    def login(self):
+        name = input("Enter your name: ")
+        for user in self.users:
+            if user.getName() == name:
+                print(f"Welcome back, {name}!")
+                return True
+        print(f"User with name {name} does not exist. What would you like to do?")
+        print("1. Create User")
+        print("2. Exit")
+        choice = input()
+        if choice == "1":
+            self.createUser()
+        elif choice == "2":
+            print("Goodbye!")
+            exit()
+
+    def onSuccessfulLogin(self):
+        print("What would you like to do?")
+        print("1. Add food to pantry")
+        print("2. Remove food from pantry")
+        print("3. Create meal")
+        print("4. Switch user")
+        print("5. Exit")
+        choice = input()
+
+        if choice == "1":
+           # self.insertFood()
+           pass
+        elif choice == "2":
+           # self.removeFood()
+           pass
+        elif choice == "3":
+           # self.makeMeal()
+           pass
+        elif choice == "4":
+           # print("Goodbye!")
+           # exit()
+           pass
 
     def insertFood(self):
         name = input("Enter food name: ")
