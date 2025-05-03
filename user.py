@@ -6,7 +6,8 @@ class User:
     def __init__(self):
         self.name = ""
         self.panty = Pantry()
-    
+        self.food = Food()
+        self.meal = Meal()
 
     def setName(self, name):
         self.name = name

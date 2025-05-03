@@ -1,5 +1,4 @@
 import unittest
-from food import Food
 from pantry import Pantry
 
 #coverage run -m unittest discover

@@ -1,4 +1,3 @@
-from food import Food
 from pantry import Pantry
 
 class Meal:
