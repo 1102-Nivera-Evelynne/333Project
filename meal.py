@@ -16,6 +16,9 @@ class Meal:
         else:
             return False
         
+    def getName(self):
+        return self.name
+        
     def setPantry(self, pantry):
         if isinstance(pantry, Pantry):
             self.pantry = pantry

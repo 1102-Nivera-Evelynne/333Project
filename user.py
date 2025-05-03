@@ -1,5 +1,6 @@
 from food import Food
 from pantry import Pantry
+from meal import Meal
 
 class User:
     def __init__(self):
@@ -47,14 +48,33 @@ class User:
             return False
     
     def createMeal(self, mealName):
-        self.meal.setPantry(self.panty)
-        self.meal.setName(mealName)
-        self.meals.append(self.meal)
+        for meal in self.meals:
+            if meal.getName() == mealName:
+                print("Meal already exists.")
+                return False
+        meal = Meal()
+        meal.setName(mealName)
+        meal.setPantry(self.panty)
+        self.meals.append(meal)
         return True
     
-    def addFoodToMeal(self, mealname, foodName, amount):
+    def addFoodToMeal(self, mealName, foodName, amount):
+        currentMeal = None
         for meal in self.meals:
-            if meal.getName() == mealname:
-                if meal.addFood(foodName, amount):
-                    return True
-        return False
+            if meal.getName() == mealName:
+                    currentMeal = meal
+
+        if currentMeal is None:
+            print("Meal not found.")
+            return False
+
+        if(currentMeal.addFood(foodName, amount)):
+            return True
+        else:
+            return False
+        
+    def getMeal(self, mealName):
+        for meal in self.meals:
+            if meal.getName() == mealName:
+                return meal
+        return None
