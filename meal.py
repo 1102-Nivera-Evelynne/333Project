@@ -11,8 +11,11 @@ class Meal:
         self.protein = 0
 
     def setName(self, name):
-        self.name = name
-        return True
+        if name != "":
+            self.name = name
+            return True
+        else:
+            return False
     
     def addFood(self, foodName, amount):
         if self.pantry.removeFood(foodName, amount):
@@ -27,6 +30,8 @@ class Meal:
             self.calories = self.calories + (item["food"].calories * item["amount"])
             self.carbs = self.carbs + (item["food"].carbs * item["amount"])
             self.protein = self.protein + (item["food"].protein * item["amount"])
+
+        return self.calories, self.carbs, self.protein
             
     def getMeal(self):
         meal_info = {
@@ -37,3 +42,10 @@ class Meal:
             "protein": self.protein
         }
         return meal_info
+    
+    def resetMeal(self):
+        self.foods = []
+        self.calories = 0
+        self.carbs = 0
+        self.protein = 0
+        return True
