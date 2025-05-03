@@ -8,6 +8,7 @@ class Main:
         self.pantry = self.meal.pantry
         self.food = Food()
         self.users = []
+        self.currentUser = None
 
         self.begin()
 
@@ -46,7 +47,7 @@ class Main:
         for user in self.users:
             if user.getName() == name:
                 print(f"Welcome back, {name}!")
-                return True
+                self.onSuccessfulLogin(name)
         print(f"User with name {name} does not exist. What would you like to do?")
         print("1. Create User")
         print("2. Exit")
@@ -57,7 +58,10 @@ class Main:
             print("Goodbye!")
             exit()
 
-    def onSuccessfulLogin(self):
+    def onSuccessfulLogin(self, name):
+        for user in self.users:
+            if user.getName() == name:
+                self.currentUser = user
         print("What would you like to do?")
         print("1. Add food to pantry")
         print("2. Remove food from pantry")
@@ -67,8 +71,7 @@ class Main:
         choice = input()
 
         if choice == "1":
-           # self.insertFood()
-           pass
+           self.insertFood()
         elif choice == "2":
            # self.removeFood()
            pass
@@ -81,44 +84,27 @@ class Main:
            pass
 
     def insertFood(self):
-        name = input("Enter food name: ")
-
-        if self.pantry.checkFoodInPantry(name):
-            amount = float(input("Enter amount to add: "))
-            self.pantry.addFoodExists(amount)
-        else:
-            calories = float(input("Enter calories: "))
-            carbs = float(input("Enter carbs: "))
-            protein = float(input("Enter protein: "))
-            unit = input("Enter unit: ")
-            amount = float(input("Enter amount: "))
-            self.pantry.addFoodNotExist(calories, carbs, protein, unit, amount)
-
-    def removeFood(self):
-        name = input("Enter food name to remove: ")
-        amount = float(input("Enter amount to remove: "))
-        if self.pantry.removeFood(name, amount):
-            print(f"Removed {amount} of {name}.")
-            print(f"Remaining amount: {self.pantry.getFoodAmount(name)} of {name}.")
-        else:
-            print(f"Failed to remove {amount} of {name}.")
-
-    def makeMeal(self):
-        self.meal.setName(input("Enter meal name: "))
-
-        while True:
-            food_name = input("Enter food name to add to meal (or 'done' to finish): ")
-            if food_name.lower() == 'done':
-                break
-            amount = float(input("Enter amount: "))
-            if self.meal.addFood(food_name, amount):
-                print(f"Added {amount} of {food_name} to the meal.")
+        food = input("Enter food name: ")
+        if self.currentUser.checkFoodInPantry(food):
+            amount = input("Looks like you already own some of that food. Enter amount you'd like to add: ")
+            if self.currentUser.addExistingFood(amount):
+                print(f"{amount} of {food} has been added to the pantry.")
             else:
-                print(f"Failed to add {food_name} to the meal.")
-
-        print("Meal created:", self.meal.getMeal())
-
-
+                print(f"Failed to add {food}.")
+        else:
+            print(f"Looks like {food} is not in your pantry. Please enter the following information to add it:")
+            calories = input("Enter calories: ")
+            carbs = input("Enter carbs: ")
+            protein = input("Enter protein: ")
+            unit = input("Enter unit: ")
+            amount = input("Enter amount: ")
+            if self.currentUser.addNewFood(float(calories), float(carbs), float(protein), unit, float(amount)):
+                print(f"{amount} of {food} has been added to the pantry.")
+                self.onSuccessfulLogin(self.currentUser.getName())
+                
+            else:
+                print(f"Failed to add {food}.")
+                self.onSuccessfulLogin(self.currentUser.getName())
 
 if __name__ == '__main__':
     Main()

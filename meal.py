@@ -2,7 +2,7 @@ from pantry import Pantry
 
 class Meal:
     def __init__(self):
-        self.pantry = Pantry()
+        self.pantry = None
         self.name = ""
         self.foods = []
         self.calories = 0
@@ -15,6 +15,13 @@ class Meal:
             return True
         else:
             return False
+        
+    def setPantry(self, pantry):
+        if isinstance(pantry, Pantry):
+            self.pantry = pantry
+            return True
+        else:
+            raise TypeError("Pantry must be an instance of the Pantry class.")
     
     def addFood(self, foodName, amount):
         if self.pantry.removeFood(foodName, amount):
