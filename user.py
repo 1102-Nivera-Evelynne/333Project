@@ -1,6 +1,5 @@
 from food import Food
 from pantry import Pantry
-from meal import Meal
 
 class User:
     def __init__(self):
