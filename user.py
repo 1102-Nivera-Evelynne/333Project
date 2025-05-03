@@ -10,10 +10,12 @@ class User:
         self.meal = Meal()
 
     def setName(self, name):
-        self.name = name
-        return True
+        if name != "":
+            self.name = name
+            return True
+        else:
+            return False
     
     def getName(self):
-        #test commit
         return self.name
     

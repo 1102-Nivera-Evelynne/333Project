@@ -1,16 +1,42 @@
 from food import Food
 from meal import Meal
+from user import User
 
 class Main:
     def __init__(self):
         self.meal = Meal()
         self.pantry = self.meal.pantry
         self.food = Food()
+        self.users = []
 
-        self.insertFood()
-        self.insertFood()
-        self.removeFood()
-        self.makeMeal()
+        self.begin()
+
+    def begin(self):
+        print("Welcome to Food Logger! What would you like to do?")
+        print("1. Create User")
+        print("2. Log in")
+        print("3. Exit")
+        choice = input()
+
+        if choice == "1":
+            self.createUser()
+
+    def createUser(self):
+        name = input("Enter your name: ")
+        user = User()
+
+        for name in self.users:
+            if name == user.getName():
+                print(f"User with name {name} already exists.")
+                return False
+
+        if user.setName(name):
+            self.users.append(user)
+            print(f"'{name}' has been added.")
+            return True
+        else:
+            print(f"Failed to create user with name {name}. Name cannot be empty.")
+            self.createUser()
 
     def insertFood(self):
         name = input("Enter food name: ")
