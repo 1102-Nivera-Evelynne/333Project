@@ -27,12 +27,11 @@ class Meal:
             raise TypeError("Pantry must be an instance of the Pantry class.")
     
     def addFood(self, foodName, amount):
-        if self.pantry.removeFood(foodName, amount):
-            food = self.pantry.getFood(foodName)
-            if food:
-                self.foods.append({"food": food, "amount": amount})
-                self.calculateNutritionalValues()
-                return True
+        food = self.pantry.getFood(foodName)
+        if food and self.pantry.removeFood(foodName, amount):
+            self.foods.append({"food": food, "amount": amount})
+            self.calculateNutritionalValues()
+            return True
     
     def calculateNutritionalValues(self):
         for item in self.foods:

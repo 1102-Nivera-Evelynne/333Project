@@ -52,3 +52,6 @@ class TestMeal(unittest.TestCase):
         self.assertEqual(self.meal.carbs, 0)
         self.assertEqual(self.meal.protein, 0)
         self.assertEqual(self.meal.name, "")
+
+if __name__ == '__main__':
+    unittest.main()

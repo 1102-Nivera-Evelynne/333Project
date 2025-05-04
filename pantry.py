@@ -3,27 +3,28 @@ from food import Food
 class Pantry:
     def __init__(self):
         self.foods = []  
-        self.foodName = ""
 
     def checkFoodInPantry(self, foodName):
-        self.foodName = foodName
         for item in self.foods:
             if item["food"].name == foodName:
                 return True
         return False
 
-    def addFoodExists(self, amount):
+    def addFoodExists(self, foodname, amount):
         if not isinstance(amount, (int, float)):
             raise TypeError("Amount must be a number.")
 
         for item in self.foods:
-            if item["food"].name == self.foodName:
+            if item["food"].name == foodname:
                 item["amount"] += amount
                 return True
 
         raise ValueError("Food not found in pantry.")
 
-    def addFoodNotExist(self, calories, carbs, protein, unit, amount):
+    def addFoodNotExist(self, foodname, calories, carbs, protein, unit, amount):
+        if self.checkFoodInPantry(foodname):
+            return "Food already exists in pantry."
+        
         if not all(isinstance(x, (int, float)) for x in [calories, carbs, protein]):
             raise TypeError("Please enter numeric values for calories, carbs, and protein.")
 
@@ -31,7 +32,7 @@ class Pantry:
             raise TypeError("Amount must be a number.")
 
         food = Food()
-        food.setAttributes(self.foodName, calories, carbs, protein, unit)
+        food.setAttributes(foodname, calories, carbs, protein, unit)
         self.foods.append({"food": food, "amount": amount})
         return True
     
@@ -48,18 +49,19 @@ class Pantry:
         return None
     
     def removeFood(self, foodName, amount):
+        itemRemoved = False
         for item in self.foods:
-            if item["food"].name == foodName:
-                if amount == item["amount"]:
-                    self.foods.remove(item)
-                    return True
-                
-                elif amount < item["amount"]:
+            if item["food"].name == foodName: 
+                if float(amount) <= float(item["amount"]):
                     item["amount"] -= amount
-                    return True
-                
-                else:
-                    return False
-                
-        return False
+                    itemRemoved = True
+
+        self.removeEmptyFood()           
+        return itemRemoved
     
+    def removeEmptyFood(self):
+        for item in self.foods:
+            if item["amount"] == 0:
+                self.foods.remove(item)
+                return True
+        return False

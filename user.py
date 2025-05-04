@@ -5,7 +5,7 @@ from meal import Meal
 class User:
     def __init__(self):
         self.name = ""
-        self.panty = Pantry()
+        self.pantry = Pantry()
         self.food = Food()
        # self.meal = Meal()
         self.meals = []
@@ -21,28 +21,28 @@ class User:
         return self.name
     
     def getPantry(self):
-        return self.panty
+        return self.pantry
 
     def checkFoodInPantry(self, foodName):
-        if self.panty.checkFoodInPantry(foodName):
+        if self.pantry.checkFoodInPantry(foodName):
             return True
         else:
             return False
     
     def addExistingFood(self, amount):
-        if self.panty.addFoodExists(amount):
+        if self.pantry.addFoodExists(amount):
             return True
         else:
             return False
         
     def addNewFood(self, calories, carbs, protein, unit, amount):
-        if self.panty.addFoodNotExist(calories, carbs, protein, unit, amount):
+        if self.pantry.addFoodNotExist(calories, carbs, protein, unit, amount):
             return True
         else:
             return False
     
     def removeFood(self, foodName, amount):
-        if self.panty.removeFood(foodName, amount):
+        if self.pantry.removeFood(foodName, amount):
             return True
         else:
             return False
@@ -50,11 +50,10 @@ class User:
     def createMeal(self, mealName):
         for meal in self.meals:
             if meal.getName() == mealName:
-                print("Meal already exists.")
                 return False
         meal = Meal()
         meal.setName(mealName)
-        meal.setPantry(self.panty)
+        meal.setPantry(self.pantry)
         self.meals.append(meal)
         return True
     
@@ -65,8 +64,7 @@ class User:
                     currentMeal = meal
 
         if currentMeal is None:
-            print("Meal not found.")
-            return False
+            return "Meal not found."
 
         if(currentMeal.addFood(foodName, amount)):
             return True
@@ -78,3 +76,24 @@ class User:
             if meal.getName() == mealName:
                 return meal
         return None
+    
+    def removeMeal(self, mealName):
+        currentMeal = None
+        for meal in self.meals:
+            if meal.getName() == mealName:
+                currentMeal = meal
+        
+        if currentMeal is None:
+            return "Meal not found."
+
+        for food in currentMeal.foods:
+            foodName = food["food"].name
+            amount = food["amount"]
+            
+            if self.pantry.checkFoodInPantry(foodName):
+                self.pantry.addFoodExists(foodName, amount)
+            else:
+                self.pantry.addFoodNotExist(foodName, food["food"].calories, food["food"].carbs, food["food"].protein, food["food"].unit, amount)
+
+        self.meals.remove(currentMeal)
+        return True
