@@ -24,6 +24,9 @@ class Main:
             self.createUser()
         if choice == "2":
             self.login()
+        if choice == "3":
+            print("Goodbye!")
+            sys.exit()
 
     def createUser(self):
         name = input("Enter your name: ")
@@ -57,7 +60,7 @@ class Main:
             self.createUser()
         elif choice == "2":
             print("Goodbye!")
-            exit()
+            sys.exit()
 
     def onSuccessfulLogin(self, name):
         for user in self.users:
