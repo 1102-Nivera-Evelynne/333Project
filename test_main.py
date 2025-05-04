@@ -18,13 +18,13 @@ class TestMain(unittest.TestCase):
         self.main.users.append(user2)
         
 
-    @patch("builtins.input", side_effect=["Apple", "2"])
+    @patch("builtins.input", side_effect=["Apple", "2", "9"])
     @patch("builtins.print")
     def testSendFoodToUser(self, mockPrint, mockInput):
         self.main.currentUser = self.main.users[0]
         self.main.users[0].pantry.addFoodNotExist("Apple", 52, 14, 0.3, "", 5)
 
-        with patch.object(self.main, "onSuccessfulLogin") as mock_login:
+        with self.assertRaises(SystemExit):  
             self.main.sendFood(self.main.users[1])
 
         self.assertEqual(self.main.users[0].pantry.getFoodAmount("Apple"), 3)
