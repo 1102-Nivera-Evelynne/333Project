@@ -1,6 +1,7 @@
 from food import Food
 from meal import Meal
 from user import User
+import sys
 
 class Main:
     def __init__(self):
@@ -69,8 +70,9 @@ class Main:
         print("4. Create meal")
         print("5. Display meals")
         print("6. Remove meal")
-        print("7. Switch user")
-        print("8. Exit")
+        print("7. Send food to user")
+        print("8. Switch user")
+        print("9. Exit")
         choice = input()
 
         if choice == "1":
@@ -85,7 +87,12 @@ class Main:
             self.displayMeals()
         elif choice == "6":
             self.removeMeal()
-        
+        elif choice == "7":
+            self.sendFoodToUser()
+        elif choice == "8":
+            self.login()
+        elif choice == "9":
+            sys.exit()
 
     def insertFood(self):
         food = input("Enter food to add: ")
@@ -179,6 +186,42 @@ class Main:
             print(f"Failed to remove meal '{mealName}'.")
         
         self.onSuccessfulLogin(self.currentUser.getName())
+
+    def sendFoodToUser(self):
+        receiver = input("Enter the name of the user you want to send food to: ")
+        if receiver == self.currentUser.getName():
+            print("You cannot send food to yourself.")
+            self.onSuccessfulLogin(self.currentUser.getName())
+        
+        for user in self.users:
+            if user.getName() == receiver:
+                rUser = user
+                self.sendFood(rUser)
+
+        print(f"User with name {receiver} does not exist. Please enter a valid name.")
+        self.onSuccessfulLogin(self.currentUser.getName())
+
+    def sendFood(self, receiver):
+        foodName = input("Enter food name to send: ")
+        if self.currentUser.checkFoodInPantry(foodName):
+            amount = input(f"Enter amount of {foodName} to send: ")
+            amount = float(amount)
+
+        if receiver.checkFoodInPantry(foodName):
+            receiver.addExistingFood(foodName, amount)
+        else:
+            receiver.addNewFood(foodName, self.currentUser.getPantry().getFood(foodName).calories,
+                self.currentUser.getPantry().getFood(foodName).carbs,
+                self.currentUser.getPantry().getFood(foodName).protein,
+                self.currentUser.getPantry().getFood(foodName).unit, 
+                amount)
+            
+        if self.currentUser.removeFood(foodName, amount):
+            print(f"{amount} of {foodName} has been sent to {receiver.getName()}.")
+            self.onSuccessfulLogin(self.currentUser.getName())
+        else:
+            print(f"Failed to send {foodName}.")
+            self.onSuccessfulLogin(self.currentUser.getName())
 
 if __name__ == '__main__':
     Main()
