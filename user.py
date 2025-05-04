@@ -29,14 +29,14 @@ class User:
         else:
             return False
     
-    def addExistingFood(self, amount):
-        if self.pantry.addFoodExists(amount):
+    def addExistingFood(self, foodname, amount):
+        if self.pantry.addFoodExists(foodname, amount):
             return True
         else:
             return False
         
-    def addNewFood(self, calories, carbs, protein, unit, amount):
-        if self.pantry.addFoodNotExist(calories, carbs, protein, unit, amount):
+    def addNewFood(self, foodname, calories, carbs, protein, unit, amount):
+        if self.pantry.addFoodNotExist(foodname, calories, carbs, protein, unit, amount):
             return True
         else:
             return False

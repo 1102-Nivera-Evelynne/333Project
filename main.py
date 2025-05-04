@@ -87,7 +87,7 @@ class Main:
         food = input("Enter food name: ")
         if self.currentUser.checkFoodInPantry(food):
             amount = input("Looks like you already own some of that food. Enter amount you'd like to add: ")
-            if self.currentUser.addExistingFood(amount):
+            if self.currentUser.addExistingFood(food, amount):
                 print(f"{amount} of {food} has been added to the pantry.")
             else:
                 print(f"Failed to add {food}.")
@@ -98,7 +98,7 @@ class Main:
             protein = input("Enter protein: ")
             unit = input("Enter unit: ")
             amount = input("Enter amount: ")
-            if self.currentUser.addNewFood(float(calories), float(carbs), float(protein), unit, float(amount)):
+            if self.currentUser.addNewFood(food, float(calories), float(carbs), float(protein), unit, float(amount)):
                 print(f"{amount} of {food} has been added to the pantry.")
                 self.onSuccessfulLogin(self.currentUser.getName())
                 
