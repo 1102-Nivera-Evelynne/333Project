@@ -97,3 +97,16 @@ class User:
 
         self.meals.remove(currentMeal)
         return True
+    
+    def getNutritionalValues(self):
+        totalCalories = 0
+        totalCarbs = 0
+        totalProtein = 0
+        
+        for meal in self.meals:
+            value = meal.calculateNutritionalValues()
+            totalCalories += value[0]
+            totalCarbs += value[1]
+            totalProtein += value[2]
+        
+        return totalCalories, totalCarbs, totalProtein

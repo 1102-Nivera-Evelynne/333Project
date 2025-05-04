@@ -34,6 +34,9 @@ class Meal:
             return True
     
     def calculateNutritionalValues(self):
+        self.calories = 0
+        self.carbs = 0
+        self.protein = 0
         for item in self.foods:
             self.calories = self.calories + (item["food"].calories * item["amount"])
             self.carbs = self.carbs + (item["food"].carbs * item["amount"])
