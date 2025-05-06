@@ -30,7 +30,7 @@ jobs:
           pip install pytest ruff
 
       - name: Run tests
-        run: pytest test_*.py
+        run: pytest 
 
       - name: Lint code with Ruff
         run: ruff check .
