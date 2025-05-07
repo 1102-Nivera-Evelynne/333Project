@@ -111,9 +111,9 @@ class Main:
             calories = input("Enter calories: ")
             carbs = input("Enter carbs: ")
             protein = input("Enter protein: ")
-            unit = input("Enter unit: ")
+        #    unit = input("Enter unit: ")
             amount = input("Enter amount: ")
-            if self.currentUser.addNewFood(food, float(calories), float(carbs), float(protein), unit, float(amount)):
+            if self.currentUser.addNewFood(food, float(calories), float(carbs), float(protein), "", float(amount)):
                 print(f"{amount} of {food} has been added to the pantry.")
                 
             else:
