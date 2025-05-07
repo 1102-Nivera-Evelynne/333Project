@@ -107,6 +107,6 @@ class User:
             value = meal.calculateNutritionalValues()
             totalCalories += value[0]
             totalCarbs += value[1]
-            totalProtein += value[2]
+            totalProtein += value[0]
         
         return totalCalories, totalCarbs, totalProtein
