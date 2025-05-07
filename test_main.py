@@ -30,7 +30,7 @@ class TestMain(unittest.TestCase):
         self.assertEqual(self.main.users[0].pantry.getFoodAmount("Apple"), 3)
         self.assertEqual(self.main.users[1].pantry.getFoodAmount("Apple"), 2)
 
-    @patch("builtins.input", side_effect=["Apple", "52", "14", "0.3", "", "5", "9"])
+    @patch("builtins.input", side_effect=["Apple", "52", "14", "0.3", "5", "9"])
     @patch("builtins.print")
     def testInsertFoodToPantry(self, mockPrint, mockInput):
         self.main.currentUser = self.main.users[0]
