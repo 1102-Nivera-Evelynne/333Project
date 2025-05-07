@@ -75,6 +75,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.createRelease.outputs.upload_url }}
-          asset_path: dist/mealLogger.exe
-          asset_name: mealLogger.exe
+          asset_path: dist/main.exe
+          asset_name: main.exe
           asset_content_type: application/octet-stream
