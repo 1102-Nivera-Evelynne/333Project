@@ -3,6 +3,9 @@ from meal import Meal
 from user import User
 import sys
 
+#coverage run -m unittest discover
+#coverage report -m
+
 class Main:
     def __init__(self):
         self.meal = Meal()
@@ -14,7 +17,7 @@ class Main:
         self.begin()
 
     def begin(self):
-        print("Welcome to Food Logger! What would you like to do?")
+        print("Welcome to Food Logger! It's nice to meet you! What would you like to do?")
         print("1. Create User")
         print("2. Log in")
         print("3. Exit")
