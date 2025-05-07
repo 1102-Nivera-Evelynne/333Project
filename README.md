@@ -1,2 +1,2 @@
 # 333Project
-(projectCoverage.png)
+!(projectCoverage.png)
